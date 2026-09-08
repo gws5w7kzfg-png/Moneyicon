@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>福岡秋季漫遊之旅</title>
+    <!-- 引入圓潤字體 -->
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-creamy: #F9F7F2;      /* 米白色 */
+            --gray-blue: #A8B5BF;      /* 灰藍色 */
+            --milk-tea: #D9C5B2;       /* 奶茶色 */
+            --dark-brown: #4A3E37;     /* 深咖色 */
+            --border-color: #E0DDD5;
+            --soft-white: rgba(255, 255, 255, 0.8);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'M PLUS Rounded 1c', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-creamy);
+            color: var(--dark-brown);
+            line-height: 1.6;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(168, 181, 191, 0.1) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(217, 197, 178, 0.1) 0px, transparent 50%);
+            min-height: 100vh;
+        }
+
+        /* 橫幅標題 */
+        .banner {
+            width: 100%;
+            padding: 50px 20px;
+            background: linear-gradient(to right, var(--milk-tea), var(--gray-blue));
+            color: white;
+            text-align: center;
+            letter-spacing: 4px;
+        }
+
+        .banner h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .banner p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        /* 橫向捲動導航 */
+        .nav-scroll-container {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: var(--bg-creamy);
+            padding: 15px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .nav-wrapper {
+            display: flex;
+            overflow-x: auto;
+            white-space: nowrap;
+            padding: 0 20px;
+            gap: 12px;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .nav-wrapper::-webkit-scrollbar { display: none; }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 90px;
+            padding: 10px 15px;
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .nav-item span:first-child { font-weight: 700; font-size: 0.9rem; }
+        .nav-item span:last-child { font-size: 0.75rem; color: var(--gray-blue); }
+
+        .nav-item.active {
+            background: var(--gray-blue);
+            border-color: var(--gray-blue);
+        }
+
+        .nav-item.active span { color: white; }
+        .nav-item.active span:last-child { opacity: 0.8; }
+
+        /* 備註欄 */
+        .daily-remark {
+            margin: 20px auto;
+            max-width: 800px;
+            padding: 15px 25px;
+            background: var(--soft-white);
+            border-left: 4px solid var(--gray-blue);
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
+        .container {
+            padding: 0 20px 100px 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .page { display: none; animation: fadeIn 0.4s ease; }
+        .page.active { display: block; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* 行前準備區塊 (僅首頁) */
+        .prep-section {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title::before { content: '|'; color: var(--milk-tea); font-weight: bold; }
+
+/* VJW 專屬樣式 */
+.vjw-section {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    border: 1px solid var(--border-color);
+    margin-bottom: 30px;
+}
+
+.vjw-card {
+    background: #F0F4F8; /* 淺藍色背景 */
+    padding: 15px;
+    border-radius: 10px;
+    font-size: 0.85rem;
+}
+
+.vjw-btn {
+    display: block;
+    text-align: center;
+    background: var(--dark-brown);
+    color: white !important;
+    padding: 12px;
+    text-decoration: none;
+    border-radius: 10px;
+    margin: 15px 0;
+    font-weight: 700;
+    font-size: 0.9rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.vjw-list {
+    list-style: none;
+    padding: 0;
+}
+
+.vjw-list li {
+    margin-bottom: 8px;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+.vjw-list li::before {
+    content: '✓';
+    color: #4CAF50;
+    font-weight: bold;
+}
+
+        /* 行程總覽列表 */
+        .index-list { list-style: none; }
+        .index-list li {
+            padding: 18px;
+            background: white;
+            margin-bottom: 12px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            font-size: 0.95rem;
+        }
+
+        .index-list span { color: var(--gray-blue); margin-right: 12px; font-weight: 700; }
+
+        /* 時間線：點放大、線加粗 */
+        .timeline {
+            position: relative;
+            padding-left: 35px;
+            margin-top: 25px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 5px;
+            bottom: 5px;
+            width: 5px; /* 加粗線條 */
+            background: var(--milk-tea);
+            border-radius: 10px;
+        }
+
+        .spot {
+            position: relative;
+            margin-bottom: 40px;
+        }
+
+        .spot::before {
+            content: '•';
+            position: absolute;
+            left: -43px; /* 調整放大圓點位置 */
+            top: -14px;
+            color: var(--milk-tea);
+            font-size: 3rem; /* 放大點點 */
+        }
+
+        .time { font-size: 0.9rem; color: var(--gray-blue); font-weight: 700; }
+        .spot-name { font-size: 1.2rem; font-weight: 500; margin: 4px 0; }
+
+        .spot-detail {
+            font-size: 0.85rem;
+            background: white;
+            padding: 12px 18px;
+            border-radius: 10px;
+            margin-top: 10px;
+            border: 1px solid var(--border-color);
+            color: var(--dark-brown);
+            opacity: 0.9;
+        }
+
+        /* 交通標籤 */
+        .transport-badge {
+            float: right;
+            font-size: 0.75rem;
+            padding: 3px 15px;
+            border: 1.5px solid var(--gray-blue);
+            color: var(--gray-blue);
+            border-radius: 20px;
+            font-weight: 500;
+        }
+
+        /* 清除浮動 */
+        .clearfix::after { content: ""; clear: both; display: table; }
+/* --- 這裡開始是新加入的圖片框樣式 --- */
+        .photo-upload-zone {
+            margin-top: 12px;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            border: 2px dashed var(--milk-tea);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.4);
+            cursor: pointer;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .photo-upload-zone:hover {
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        .photo-upload-zone img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            display: block;
+        }
+
+        .upload-placeholder {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--gray-blue);
+            font-size: 0.8rem;
+        }
+
+        .upload-placeholder::before {
+            content: '👁️‍🗨️';
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+        /* --- 樣式結束 --- */
+/* 右下角懸浮儲存按鈕 */
+.save-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 9999;
+    background-color: var(--dark-brown);
+    color: white;
+    padding: 10px 16px;
+    border-radius: 30px;
+    border: none;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: transform 0.2s, background-color 0.2s;
+}
+
+.save-btn:hover {
+    background-color: #5d4e45;
+    transform: scale(1.05);
+}
+
+.save-btn:active {
+    transform: scale(0.95);
+}
+
+/* 儲存時隱藏按鈕，避免按鈕把自己也存進去 */
+.hidden-print {
+    display: none !important;
+}
+/* 天氣與穿搭建議樣式 */
+        .weather-section {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 30px;
+        }
+        .weather-container {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+        .weather-icon {
+            font-size: 3rem;
+            background: var(--bg-creamy);
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+        .weather-info {
+            flex: 1;
+        }
+        .temp-range {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--dark-brown);
+            margin-bottom: 5px;
+        }
+        .outfit-tips {
+            font-size: 0.85rem;
+            color: var(--dark-brown);
+            background: #FFF9F2; /* 極淺橘色背景 */
+            padding: 10px 15px;
+            border-radius: 10px;
+            border-left: 3px solid var(--milk-tea);
+margin-top: 15px;
+        }
+/* 匯率換算器專屬樣式 */
+        .exchange-section {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 30px;
+        }
+        .converter-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .currency-row {
+            display: flex;
+            align-items: center;
+            background: var(--bg-creamy);
+            padding: 12px 15px;
+            border-radius: 12px;
+        }
+        .currency-label {
+            font-size: 0.85rem;
+            font-weight: 700;
+            width: 85px;
+            color: var(--dark-brown);
+        }
+        .currency-input {
+            flex: 1;
+            border: none;
+            background: transparent;
+            font-size: 1.2rem;
+            color: var(--dark-brown);
+            text-align: right;
+            outline: none;
+            width: 100%;
+        }
+        .exchange-icon {
+            text-align: center;
+            color: var(--milk-tea);
+            font-size: 1.2rem;
+            margin: -5px 0;
+        }
+        .rate-info {
+            font-size: 0.75rem;
+            color: var(--gray-blue);
+            text-align: center;
+            margin-top: 5px;
+        }
+/* 記帳頁面專屬樣式 */
+.accounting-header { background: white; padding: 20px; border-radius: 15px; text-align: center; margin-bottom: 20px; border: 1px solid var(--border-color); }
+.total-jpy { font-size: 2rem; color: #b3544d; font-weight: 700; margin: 0; }
+.total-twd { font-size: 1rem; color: var(--gray-blue); margin-bottom: 15px; }
+.cat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; border-top: 1px solid #eee; padding-top: 15px; }
+.cat-node { font-size: 0.85rem; display: flex; justify-content: space-between; }
+.btn-add-record { background: #b3544d; color: white; border: none; padding: 12px; width: 100%; border-radius: 12px; font-size: 1rem; cursor: pointer; margin-bottom: 20px; box-shadow: 0 4px 6px rgba(179,84,77,0.2); }
+.acc-date-group { background: white; border-radius: 15px; margin-bottom: 15px; overflow: hidden; border: 1px solid var(--border-color); }
+.acc-date-header { background: #F9F7F2; padding: 12px 15px; cursor: pointer; display: flex; justify-content: space-between; font-weight: 700; font-size: 0.9rem; }
+.acc-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 15px; border-top: 1px solid #f5f5f5; }
+.acc-info .shop { font-size: 0.95rem; font-weight: 500; }
+.acc-info .sub { font-size: 0.75rem; color: #999; }
+.acc-right { display: flex; align-items: center; gap: 10px; }
+.acc-amount { font-weight: 700; color: var(--dark-brown); }
+.acc-del { background: #eee; color: #999; border: none; width: 22px; height: 22px; border-radius: 50%; cursor: pointer; font-size: 12px; }
+
+/* 彈出視窗樣式 */
+.acc-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 10000; justify-content: center; align-items: center; }
+.acc-modal-content { background: var(--bg-creamy); padding: 25px; border-radius: 20px; width: 85%; max-width: 350px; }
+.acc-modal-content label { font-size: 0.8rem; color: #888; display: block; margin-top: 10px; }
+.acc-modal-content input, .acc-modal-content select { width: 100%; padding: 10px; border-radius: 10px; border: 1px solid #ddd; margin-top: 5px; outline: none; }
+/* 1. 調整新增分類的容器，讓內容物置中 */
+.cat-input-area {
+    display: flex;
+    justify-content: center; /* 水平置中 */
+    align-items: center;     /* 垂直對齊 */
+    gap: 10px;               /* 輸入框與按鈕的間距 */
+    margin-top: 10px;
+}
+
+/* 2. 修改「新增分類」輸入框的長度 */
+#acc-new-cat {
+    width: 200px !important;  /* 設定輸入框長度 */
+    margin-top: 0 !important; /* 移除上方間距以保持水平對齊 */
+    padding: 8px 12px !important;
+    font-size: 0.85rem !important;
+    border-radius: 10px !important;
+}
+
+/* 3. 修改「+」按鈕的長度 */
+.cat-input-area .plus-btn {
+    width: 45px !important;   /* 設定按鈕長度（寬度） */
+    height: 36px !important;  /* 設定高度，建議與輸入框一致 */
+    padding: 0 !important;    /* 清除內邊距 */
+    margin: 0 !important;     /* 清除外邊距 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem !important;
+    border-radius: 10px !important; /* 讓按鈕也圓潤 */
+    background-color: var(--milk-tea); /* 使用你網頁的奶茶色，或是 var(--muji-red) */
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+/* --- 以下是針對「新增視窗」按鈕寬度的微調，直接新增即可 --- */
+
+/* 1. 修改彈出視窗裡「日期選擇格子」的長度 */
+#acc-date {
+    width: 265px !important;   /* 強制設定長度 */
+    margin: 5px auto !important; /* 讓它置中 */
+    display: block !important;
+}
+
+/* 修正儲存按鈕：居中且不超出頁面 */
+.acc-modal-content .save-btn {
+    width: 180px !important;    /* 設定你想要的寬度 */
+    max-width: 90%;             /* 防止在小手機上超出螢幕 */
+    display: block !important;   /* 強制轉為區塊元素 */
+    margin: 25px auto !important; /* 左右自動邊距 (居中) */
+    padding: 12px 0 !important;   /* 上下內邊距，左右設為0 */
+    float: none !important;      /* 確保沒有向右浮動 */
+    position: static !important; /* 確保不是絕對定位 */
+    box-sizing: border-box;      /* 確保寬度包含邊框和內邊距 */
+}
+/* 彈出視窗左上角的 X 按鈕 */
+.acc-modal-close-left {
+    position: absolute;
+    top: 15px;
+    left: 15px; /* 定位於左上角 */
+    background: #eee;
+    color: #888;
+    border: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%; /* 圓潤風 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background 0.3s, color 0.3s;
+    z-index: 10;
+}
+
+.acc-modal-close-left:hover {
+    background: #ddd;
+    color: var(--dark-brown);
+}
+
+/* 確保彈出視窗內容容器有定位參考基準 */
+.acc-modal-content {
+    position: relative; /* 必加：讓左上角按鈕能相對於此框定位 */
+}
+    </style>
+<link rel="icon" type="image/png" href="favicon-96x96.png" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="favicon.svg" />
+<link rel="shortcut icon" href="favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+<meta name="apple-mobile-web-app-title" content="福岡250" />
+<link rel="manifest" href="site.webmanifest" />
+
+</head>
+<body>
+<button class="save-btn" id="exportBtn" onclick="exportHTML()">
+    儲存行程٩(˃̶͈̀௰˂̶͈́)و
+</button>
+    <div class="banner">
+        <h1 id="tripTitle">福岡秋季漫遊之旅</h1>
+        <p id="tripDateRange">2026/10/19 — 10/24</p>
+    </div>
+
+    <!-- 橫向導航列 -->
+    <div class="nav-scroll-container">
+        <div class="nav-wrapper" id="navWrapper">
+            <!-- 由 JS 生成按鈕 -->
+        </div>
+    </div>
+
+    <!-- 備註/提醒 -->
+    <div id="dailyRemark" class="daily-remark">
+        福岡之旅即將開啟！いきましょう！(≧∇≦)
+    </div>
+
+    <div class="container" id="mainContainer">
+        <!-- 由 JS 生成頁面 -->
+    </div>
+
+    <script>
+        const tripData = {
+            title: "福岡秋季漫遊之旅",
+            dateRange: "2026/10/19 — 10/24",
+            preTrip: [
+                "確認 Visit Japan Web 入境申請", 
+                "準備博多或全國交通IC卡 (SUGOCA/Suica)", 
+                "預約餐廳及確認包車資訊"
+            ],
+            days: [
+                {
+                    name: "首頁", date: "Home",
+                    remark: "期待已久的福岡之旅即將開啟！いきましょう！(≧∇≦)",
+                    summary: [
+                        "抵達福岡、博多拉麵、超市補貨",
+                        "太宰府天滿宮、櫛田神社、燒肉",
+                        "糸島自然風光、福岡塔",
+                        "門司港懷舊、小倉城、皿倉山夜景",
+                        "麵包超人博物館、天神商圈購物",
+                        "機場最後採購、歸途"
+                    ]
+                },
+                {
+                    name: "Day 1", date: "10/19", transport: "地下鐵/機場巴士",
+                    remark: "✔️抵達飯店後請先確認入住手續。     MaxValu 為 24 小時營業，可補給零食與飲品。",
+                    schedule: [
+                        { time: "19:20", spot: "福岡國際機場", detail: "抵達後直接至「5號巴士站」搭乘免費接駁巴士至國內線，後搭乘地下鐵至博多車站。" ,imgUrl: "https://i.postimg.cc/3NmTfsDP/fu-gang-ji-chang.webp"},
+                        { time: "20:41", spot: "博多車站", detail: "九州交通樞紐，聚集多家餐廳和商店。" ,imgUrl: "https://i.postimg.cc/6q2s2D0R/bo-duo-che-zhan.webp"},
+                        { time: "20:47", spot: "飯店 N.33 Hakata St. East", detail: "住宿：近博多站東口，Check-in 放置行李。" ,imgUrl: "https://i.postimg.cc/y6M6hPZN/fan-dian.webp"},
+                        { time: "21:58", spot: "Shin-Shin 拉麵 KITTE博多店", detail: "美食：人氣拉麵名店，以「純情拉麵」聞名。<br>• 推薦菜單：溏心蛋拉麵（煮玉子入りらーめん）與炒飯。<br>• 營業時間：11:00-23:00（L.O.22:30)" ,imgUrl: "https://i.postimg.cc/0Ny95XLZ/la-mian.webp"},
+                        { time: "23:10", spot: "MaxValu Express 博多祇園店", detail: "購物：24小時超市，購買水果、宵夜。" ,imgUrl: "https://i.postimg.cc/bvzKHGgD/chao-shi.webp"}
+					]
+                },
+                {
+                    name: "Day 2", date: "10/20", transport: "包車/地下鐵",
+                    remark: "✔️本日為包車行程。博多運河城有種類豐富的美食街及集結多家知名拉麵的拉麵競技場，晚餐請自行解決。",
+                    schedule: [
+                        { time: "09:00", spot: "博多車站", detail: "包車乘車點，可提早來買早餐。" ,imgUrl: "https://i.postimg.cc/yYyPsJ16/bo-duo-che-zhan.webp"},
+								{ time: "09:35", spot: "太宰府前表參道", detail: "景點：從西鐵「太宰府站」延伸至「太宰府天滿宮」本殿、長約400公尺充滿在地小吃及商店的老街。",imgUrl: "https://i.postimg.cc/Yq6X0n3p/biao-can-dao.webp" },
+                        { time: "09:40", spot: "梅枝餅 安武 やす武", detail: "美食：太宰府表參道必吃的紅豆餡餅。<br>• 價格：150日圓/顆。" ,imgUrl: "https://i.postimg.cc/ydSNySQC/mei-zhi-bing.webp"},
+                        { time: "09:50", spot: "星巴克 太宰府天滿宮表參道店", detail: "景點：隈研吾設計，用 2000 根木棍交織而成的特色建築。<br>P.S.福吉茶那堤好喝(^^)" ,imgUrl: "https://i.postimg.cc/28t4z4pm/xing-ba-ke.webp"},
+                        { time: "10:10", spot: "太宰府天滿宮", detail: "景點：祭祀學問之神菅原道真的神社，境內優美，四季皆有不同的花卉景色。<br>• 心字池與太鼓橋：跨越象徵過去、現在、未來的三座拱橋，能洗滌身心。<br>• 御神牛像：境內共有11座，傳說摸摸牛頭可以增長智慧。" ,imgUrl: "https://i.postimg.cc/SxhmzxzG/tai-zai-fu.webp"},
+                        { time: "11:20", spot: "味の明太子ふくや 太宰府店", detail: "美食：明太子創始店，販售餐點及伴手禮。<br>• 推薦餐點：太宰府店限定「明太子茶泡飯兩層塔」，售價1700日圓。" ,imgUrl: "https://i.postimg.cc/SxDjS4Yb/cha-pao-fan.webp"},
+								{ time: "12:20", spot: "BEAMS JAPAN 太宰府店", detail: "景點：2025年新開幕，推出多款結合當地文化的商品。" ,imgUrl: "https://i.postimg.cc/W3drZzcV/EBEC69F7-C563-41C4-930E-3CC99C71B888.webp"},
+                        { time: "14:00", spot: "櫛田神社", detail: "景點：是博多擁有超過千年歷史的地區守護神與總鎮守，供奉大幡主命（求長壽與生意興隆）、須佐之男命（除厄與平安）、天照皇大神（開運招福）。" ,imgUrl: "https://i.postimg.cc/qv50DvC8/zhi-tian-shen-she.webp"},
+                        { time: "15:40", spot: "博多運河城 Canal City", detail: "購物：擁有200家商店的大型商場，定時有音樂噴泉表演。<br>還有萬代、鋼彈等多家玩具店嘿嘿嘿嘿~\(≧▽≦)/~" ,imgUrl: "https://i.postimg.cc/pT82FMr8/yun-he-cheng.webp"}
+					]        
+                   
+                },
+                {
+                    name: "Day 3", date: "10/21", transport: "遊覽車跟團",
+                    remark: "✔️會暈車記得吃暈車藥；糸島風大，海邊拍照請注意保暖。晚餐已預約燒肉。",
+                    schedule: [
+                        { time: "09:00", spot: "LAWSON（福岡東方飯店店）", detail: "跟團集合點，博多車站築紫口步行2分鐘。<br># 需提早10分鐘到達。<br>• 導遊會舉旗：「S Travel」。" ,imgUrl: "https://i.postimg.cc/SR1DbRF3/luo-sen.webp"},
+								{ time: "09:50", spot: "白糸瀑布", detail: "景點：處海拔約900公尺、高低落差達24公尺的知名自然名勝，秋季能欣賞美麗紅葉。<br>🕐 25分鐘" ,imgUrl: "https://i.postimg.cc/7LwrbJ7Z/pu-bu.webp"},
+								{ time: "10:25", spot: "Forest Cafe Midori no Oto", detail: "美食：森のカフェ緑の詩座落於高聳杉木林與白糸之森內，點一杯飲料作為入場券後，可自行拿取露營摺疊椅與裝餐點的野餐籃，走入森林觀景平台，挑選位置享用。<br>🕐 1小時15分鐘" ,imgUrl: "https://i.postimg.cc/dVwKVNzp/sen-lin-ka-fei.webp"},
+								{ time: "12:20", spot: "午餐", detail: "視情況前往「アクアマリン糸島」或「浜燒き白浜家」享用生蠔、扇貝、大蝦等新鮮海鮮燒烤（費用自理），體驗道地日式濱燒文化與糸島海岸美食魅力。<br>• 價格：約 3000-7000日圓<br>🕐 1小時45分鐘",imgUrl: "https://i.postimg.cc/NFxv61X4/hai-xian.webp" },	
+							   { time: "14:15", spot: "Totoro forest in Keyanooto Park", detail: "景點：「芥屋大門公園」內的糸島龍貓森林步道，是一處由海邊灌木叢交織而成的翠綠森林隧道。步行約 10 分鐘上山，可到小展望台。<br>🕐 20分鐘",imgUrl: "https://i.postimg.cc/GpS0zL9F/long-mao-zhi-sen.webp" },
+							 { time: "15:00", spot: "またいちの塩工坊Tottan", detail: "景點：糸島人氣美食，視情況前往又またいちの塩製鹽工房或糸島農場舍UOVO。<br>• 「またいちの塩」是以絕美海景與招牌「花鹽布丁」聞名的超人氣海邊製鹽工廠。<br>• 「農舍UOVO 」則是以自家農場新鮮「天上卵」雞蛋聞名的超人氣純白景觀咖啡廳。<br>🕐 35分鐘" ,imgUrl: "https://i.postimg.cc/63907nBz/yan-bu-ding.webp"},
+							   { time: "16:05", spot: "二見ヶ浦・夫婦岩", detail: "景點：海中白色鳥居與祈求姻緣的夫婦岩，是一處象徵愛情與緣份的浪漫地標。<br>🕐 20分鐘" ,imgUrl: "https://i.postimg.cc/bv6PM0VQ/fu-qi-yan.webp"},
+							   { time: "16:25", spot: "Angel's wing photo spot", detail: "景點：就在糸島著名的夫妻岩旁邊，「天使之翼」藝術裝置成為近年人氣打卡熱點。<br>🕐 20分鐘" ,imgUrl: "https://i.postimg.cc/ryDVBbkx/tian-shi-zhi-yi.webp"},
+							   { time: "17:00", spot: "Palm Tree Swing 椰子樹鞦韆", detail: "景點：IG 超火爆拍照點，可以欣賞糸島海岸的絕美景色，海灘上也有需多有趣造景<br>🕐 30分鐘",imgUrl: "https://i.postimg.cc/yNMQWw2Q/ye-zi-qiu-qian.webp"},
+								{ time: "18:30", spot: "回程", detail: "返回集合地點 —— LAWSON（福岡東方飯店店，博多站築紫口步行2分鐘），準備吃晚餐。" ,imgUrl: "https://i.postimg.cc/SR1DbRF3/luo-sen.webp"},
+                  		{ time: "19:00", spot: "燒肉 One Karubi Premium 中洲", detail: "美食：高評價的日式國產牛燒肉吃到飽餐廳，環境舒適且鄰近中洲川端站。建議提早兩週官網預約。<br>• 營業時間：17:00-23:00" ,imgUrl: "https://i.postimg.cc/2jdx092S/shao-rou.webp"}      
+                    ]
+                },
+                {
+                    name: "Day 4", date: "10/22", transport: "包車",
+                    remark: "✔️皿倉山夜景被譽為「新日本三大夜景」，山上氣溫較低需帶外套。晚餐已預約串燒店。",
+                    schedule: [
+								{ time: "09:00", spot: "博多車站", detail: "景點：包車上車點，買點早餐吃吧。" ,imgUrl: "https://i.postimg.cc/yYyPsJ16/bo-duo-che-zhan.webp"},
+                        { time: "10:20", spot: "門司港車站", detail: "復古木造車站，為日本首座以「車站」身分被指定為國家重要文化財的建築。" ,imgUrl: "https://i.postimg.cc/PrFmt0L6/men-si-gang.webp"},
+                        { time: "10:55", spot: "關門海峽博物館", detail: "介紹：大型影像＋互動體驗＋展望景觀的體驗型博物館，主在介紹關門海峽的港口歷史文化。<br>• 門票：約 500日圓/人" ,imgUrl: "https://i.postimg.cc/K86BTLDW/guan-men-hai-xia.webp"},
+                        { time: "12:00", spot: "Princess Phi Phi 燒咖哩", detail: "美食：高人氣香濃燒咖哩，採現場登記候位。<br>推薦餐點：明太子燒咖哩、燉牛肉燒咖哩及香蕉啤酒。<br>• 價格：1000-2000日圓" ,imgUrl: "https://i.postimg.cc/bJjx7bGt/ka-li.webp"},
+                        { time: "13:10", spot: "九州鐵道紀念館", detail: "景點：以鐵道為主題的博物館，館內保存和展示九州地區鐵道發展的歷史與文化，可看到多輛具有歷史意義的實體列車。<br>• 門票：300日圓/人" ,imgUrl: "https://i.postimg.cc/5NCh3SSX/tie-dao.webp"},
+                        { time: "14:35", spot: "小倉城", detail: "景點：有獨特「唐造」天守閣與美麗護城河的知名歷史名城。小倉城天守閣5樓是全日本唯一在天守閣頂樓營業的咖啡廳兼酒吧。<br>• 門票：350日圓/人" ,imgUrl: "https://i.postimg.cc/28jwj40b/xiao-cang-cheng.webp"},
+                        { time: "16:15", spot: "皿倉山展望台", detail: "景點：享有「新日本三大夜景」與「百億美元夜景」美譽的著名觀景勝地，可搭乘雙段式登山纜車俯瞰價值百萬美金的夜景。<br>• 票價：來回約 1230日圓/人" ,imgUrl: "https://i.postimg.cc/fLV2bMHv/min-cang-shan.webp"},
+								{ time: "19:00", spot: "かわ屋", detail: "美食：以博多名物「烤雞皮」為主的串燒店，香酥且富有鮮味的雞皮非常適合搭配酒類。<br>• 價格：2000-3000日圓" ,imgUrl: "https://i.postimg.cc/bJx1Fd0C/ji-pi.webp"}					
+                    ]
+                },
+                {
+                    name: "Day 5", date: "10/23", transport: "地下鐵/步行",
+                    remark: "✔️天神商圈是購物重地，今日建議輕便出裝。午餐已預約水炊鍋，晚餐釜飯需現場排隊。",
+                    schedule: [
+                        { time: "09:30", spot: "FUK Coffee", detail: "美食：以旅行為主題的特色咖啡店，其中昭和布丁（FUKプリン）相當有名。"  ,imgUrl: "https://i.postimg.cc/2jbksvxW/FUK.webp"},
+					{ time:"10:00", spot: "The Full Full Hakata", detail: "美食：以明太子法式麵包聞名，剛出爐香氣逼人。（可預訂）"  ,imgUrl: "https://i.postimg.cc/tJsFPz8j/Full.webp"},
+                        { time: "10:30", spot: "麵包超人兒童博物館", detail: "位於高島屋的5、6樓，是一座結合購物中心的博物館，館內也有僅限福岡才有的遊具與原創商品。<br>• 門票約2000-2200日圓/人"  ,imgUrl: "https://i.postimg.cc/KzNMCWSd/mian-bao-chao-ren.webp"},
+								{ time: "12:30", spot: "水炊きとり田", detail: "這裡提供以九州產全雞，僅用水煮煉六小時而成的滋味深厚極上湯底水炊鍋。<br>推薦餐點：博多 鳥田滿喫套餐含5道前菜、水炊鍋到收尾料理，且青菜類還可無限追加。<br>• 價格：6000-10000日圓" ,imgUrl: "https://i.postimg.cc/1t2bMCHd/shui-chui-guo.webp"},                       
+                        { time: "14:00", spot: "天神地下街", detail: "購物：全九州最大地下街，集合服飾、藥妝、精品，連接著數家百貨公司，包括Mina天神、Parco、大丸百貨等。"  ,imgUrl: "https://i.postimg.cc/fWdL3Fgr/de-xia-jie.webp"},
+                        { time: "16:00", spot: "天神西通り", detail: "購物：福岡市中央區一條熱鬧的繁華街道，匯聚各大潮流品牌、藥妝店與美食餐廳包括HUMAN MADE、mont-bell、graniph等等。"  ,imgUrl: "https://i.postimg.cc/6pf48STV/tian-shen-xi-tong.webp"},
+								{ time: "19:00", spot: "黑毛和牛 博多牛まぶし 武蔵", detail: "美食：天神西12b出口步行2分鐘，即到達日本福岡超人氣的排隊名店，主打招牌的黑毛和牛三吃丼飯。<br>• 價格：約1500-2700日圓" ,imgUrl: "https://i.postimg.cc/VN8mMVy6/shao-rou.webp"},
+								{ time: "20:00", spot: "唐吉訶德", detail: "購物：購買戶外用品及回國前的伴手禮大採買。"  ,imgUrl: "https://i.postimg.cc/63PPV82X/Donki.webp"}
+                    ]
+                },
+                {
+                    name: "Day 6", date: "10/24", transport: "巴士/地下鐵",
+                    remark: "✔️福岡機場國際線出境免稅店位於航廈3樓（過安檢後），全面改裝後面積擴大且品牌選擇極為豐富",
+                    schedule: [
+                        { time: "10:00", spot: "飯店退房", detail: "於博多車站寄放行李。" ,imgUrl: "https://i.postimg.cc/sf7XB7ZR/fan-dian.webp"},
+                        { time: "10:30", spot: "博多車站", detail: "景點：博多車站周遭有許多大型百貨，車站裡也有豐富的伴手禮可供挑選。"  ,imgUrl: "https://i.postimg.cc/pLWcQMvm/bo-duo.webp"},
+								{ time: "14:00", spot: "福岡機場國內線", detail: "地下鐵「空港線」可直接抵達。<br>1樓：大廳、便利商店、藥妝店與輕食。<br>2樓：伴手禮商店街，集結博多通饅頭、明太子仙貝（めんべい）、甘王草莓甜點等九州伴手禮（非免稅區，含8%稅金）。<br>3樓：美食餐廳街，包含知名的拉麵滑走道（Ramen Runway）與各類在地料理。" ,imgUrl: "https://i.postimg.cc/DwfJ7BrP/IMG-2324.webp"},
+                        { time: "16:50", spot: "福岡機場國際線", detail: "1樓：入境大廳。設有 LAWSON 、Tully's Coffee、扭蛋特區及期間限定店等。<br>3樓：出境大廳與全新商業區。步行通過型免稅店：過關後即可直達擴大 4 倍的全新大型免稅店（包含 Bic Camera 進駐、各地名產商店、Onitsuka Tiger、Graniph、Nintendo等）。" ,imgUrl: "https://i.postimg.cc/zDTx9GXD/ji-chang.webp"},
+                        { time: "20:20-22:10", spot: "登機回家", detail: "結束 6 天 5 夜豐富行程，平安回家。"  ,imgUrl: "https://i.postimg.cc/mDRdQKyV/shui.webp"}
+]
+                },
+{
+    name: "記帳", date: "Money",
+    remark: "錢錢沒有消失，只是變成自己喜歡的樣子(OvO)",
+    schedule: [] // 記帳分頁不需要原本的行程清單，我們會另外生成
+}
+                    
+                
+            ]
+        };
+
+        function initApp() {
+            const navWrapper = document.getElementById('navWrapper');
+            const mainContainer = document.getElementById('mainContainer');
+            tripData.days.forEach((day, index) => {
+                // 1. 生成導航按鈕
+                const navItem = document.createElement('div');
+                navItem.className = `nav-item ${index === 0 ? 'active' : ''}`;
+                navItem.innerHTML = `<span>${day.name}</span><span>${day.date}</span>`;
+                navItem.onclick = () => showPage(index);
+                navWrapper.appendChild(navItem);
+
+                // 2. 生成內容頁
+                const page = document.createElement('div');
+                page.id = `page-${index}`;
+                page.className = `page ${index === 0 ? 'active' : ''}`;
+
+                if (index === 0) {
+                    // 首頁內容（調整後順序：行前準備 -> 天氣 -> 匯率 -> VJW）
+                    page.innerHTML = `
+                        <div class="prep-section">
+                            <div class="section-title">行前準備</div>
+                            <ul style="list-style:none; font-size:0.85rem; padding-left:5px;">
+                                ${tripData.preTrip.map(item => `<li style="margin-bottom:8px;">— ${item}</li>`).join('')}
+                            </ul>
+                        </div>
+
+                        <!-- 1. 天氣與穿搭建議 -->
+                        <div class="weather-section">
+                            <div class="section-title">福岡 10 月天氣 & 穿搭</div>
+                            <div class="weather-container">
+                                <div class="weather-icon">🍂</div>
+                                <div class="weather-info">
+                                    <div class="temp-range">15°C — 23°C</div>
+                                    <div style="font-size:0.85rem; margin-bottom:10px;">秋高氣爽，早晚溫差較大。</div>
+                                </div>
+                            </div>
+                            <div class="outfit-tips">
+                                <strong>💡 穿搭建議：</strong><br>
+                                建議採「洋蔥式穿法」。白天舒適可穿長袖 T-shirt 或襯衫；早晚偏涼，請隨身攜帶薄外套或風衣。若前往山區（皿倉山）建議帶略厚的外套。
+                            </div>
+                        </div>
+
+                        <!-- 2. 即時匯率換算 -->
+                        <div class="exchange-section">
+                            <div class="section-title">即時匯率換算</div>
+                            <div class="converter-container">
+                                <div class="currency-row">
+                                    <span class="currency-label">台幣 TWD</span>
+                                    <input type="number" id="twdInput" class="currency-input" placeholder="0">
+                                </div>
+                                <div class="exchange-icon">⇅</div>
+                                <div class="currency-row">
+                                    <span class="currency-label">日幣 JPY</span>
+                                    <input type="number" id="jpyInput" class="currency-input" placeholder="0">
+                                </div>
+                                <div class="rate-info" id="rateDetail">正在獲取最新匯率...</div>
+                            </div>
+                        </div>
+
+                        <!-- 3. Visit Japan Web 區塊 (已下移至此) -->
+                        <div class="vjw-section">
+                            <div class="section-title">Visit Japan Web 入境手續</div>
+                            <div class="vjw-card">
+                                <p style="font-weight:700; margin-bottom:10px; color:#2c3e50;">出發前必做！</p>
+                                <ul class="vjw-list">
+                                    <li>填寫「入境審查」及「海關申報」</li>
+                                    <li>完成後會獲得 QR Code</li>
+                                    <li>建議「截圖保存」以防機場網路不穩</li>
+                                </ul>
+                                <a href="https://vjw-lp.digital.go.jp/zh-hant/" target="_blank" class="vjw-btn">
+                                    官方網站登入 ➔
+                                </a>
+                                <p style="font-size:0.75rem; color:#666; text-align:center; margin-top:5px;">
+                                    *目前檢疫手續已簡化，僅需 QR Code 即可。
+                                </p>
+                            </div>
+                        </div>
+                    `;
+                    // 執行匯率運算邏輯
+                    setTimeout(setupExchangeRate, 100);
+                } else if (day.name === "記帳") {
+    page.innerHTML = `
+        <div class="accounting-header">
+            <div id="acc-total-jpy" class="total-jpy">¥ 0</div>
+            <div id="acc-total-twd" class="total-twd">約 NT$ 0</div>
+            <div id="acc-category-grid" class="cat-grid"></div>
+        </div>
+        <button class="btn-add-record" onclick="openAccModal()">錢錢去哪了勒～💸</button>
+        <div id="acc-list"></div>
+    `;
+    setTimeout(updateAccUI, 100);
+			} else {
+                    // 每日詳細行程內容
+                    page.innerHTML = `
+                        <div class="clearfix">
+                            <div class="transport-badge">${day.transport}</div>
+                        </div>
+                        <div class="timeline">
+                            ${day.schedule.map((s, sIdx) => {
+    // 檢查是否有網址，並確保不是 undefined 或空字串
+    const hasImg = s.imgUrl && s.imgUrl.trim() !== "";
+    
+    return `
+    <div class="spot">
+        <div class="time">${s.time}</div>
+        <div class="spot-name">${s.spot}</div>
+        ${s.detail ? `<div class="spot-detail">${s.detail}</div>` : ''}
+        
+        <div class="photo-upload-zone" onclick="document.getElementById('file-${index}-${sIdx}').click()" 
+             style="background-color: #f5f5f5; border: 1px dashed #ccc; min-height: 150px; cursor: pointer; position: relative; border-radius: 8px; overflow: hidden; margin-top: 10px;">
+            
+            <!-- 提示文字：只有在沒有網址時才顯示 -->
+            <div id="hint-${index}-${sIdx}" 
+                 style="display: ${hasImg ? 'none' : 'flex'}; align-items: center; justify-content: center; height: 150px; color: #888;">
+                <span>📷 點擊更換照片</span>
+            </div>
+            
+            <!-- 圖片標籤：如果有網址就直接顯示 -->
+            <img id="img-${index}-${sIdx}" 
+     src="${s.imgUrl ? s.imgUrl : ''}" 
+     style="display: ${s.imgUrl ? 'block' : 'none'}; width: 100%; height: auto; min-height: 150px;" 
+     alt="照片"
+     onerror="this.style.display='none'; document.getElementById('hint-${index}-${sIdx}').style.display='flex';">
+                 
+            <input type="file" id="file-${index}-${sIdx}" accept="image/*" style="display:none" 
+                   onchange="handleImageUpload(this, '${index}-${sIdx}')">
+        </div>
+    </div>
+    `;
+}).join('')}
+                        </div>
+                    `;
+                }
+                mainContainer.appendChild(page);
+            });
+        }
+
+        function showPage(index) {
+            // 切換頁面顯示
+            const pages = document.querySelectorAll('.page');
+            pages.forEach((p, i) => {
+                p.classList.toggle('active', i === index);
+            });
+
+            // 切換導航鈕樣式
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach((item, i) => {
+                item.classList.toggle('active', i === index);
+            });
+
+            // 更新備註
+            document.getElementById('dailyRemark').innerText = tripData.days[index].remark;
+
+            // 導航列捲動置中
+            const wrapper = document.getElementById('navWrapper');
+            const activeItem = navItems[index];
+            const scrollTarget = activeItem.offsetLeft - (wrapper.offsetWidth / 2) + (activeItem.offsetWidth / 2);
+            wrapper.scrollTo({ left: scrollTarget, behavior: 'smooth' });
+
+            // 視窗捲動到頂部
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        function handleImageUpload(input, id) {
+            const file = input.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const imgElement = document.getElementById(`img-${id}`);
+                    const hintElement = document.getElementById(`hint-${id}`);
+                    imgElement.src = e.target.result;
+                    imgElement.style.display = 'block';
+                    hintElement.style.display = 'none';
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+        function exportHTML() {
+            const btn = document.getElementById('exportBtn');
+            btn.classList.add('hidden-print');
+
+            const fullHTML = `<!DOCTYPE html>\n<html lang="zh-TW">\n${document.documentElement.innerHTML}\n</html>`;
+
+            const blob = new Blob([fullHTML], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = '福岡行程_已儲存照片.html';
+            document.body.appendChild(a);
+            a.click();
+            
+            setTimeout(() => {
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                btn.classList.remove('hidden-print');
+            }, 100);
+        }
+// 匯率換算邏輯函數
+        let currentRate = 4.65; // 預設匯率
+        async function setupExchangeRate() {
+            const twdInput = document.getElementById('twdInput');
+            const jpyInput = document.getElementById('jpyInput');
+            const rateDetail = document.getElementById('rateDetail');
+
+            if (!twdInput || !jpyInput) return;
+
+            // 抓取即時資料
+            try {
+                const response = await fetch('https://open.er-api.com/v6/latest/TWD');
+                const data = await response.json();
+                if (data && data.rates && data.rates.JPY) {
+                    currentRate = data.rates.JPY;
+                    rateDetail.innerText = `今日即時匯率：1 TWD = ${currentRate.toFixed(2)} JPY`;
+                }
+            } catch (error) {
+                rateDetail.innerText = `使用預設匯率：1 TWD = ${currentRate} JPY`;
+            }
+
+            // 監聽台幣輸入
+            twdInput.addEventListener('input', () => {
+                if (!twdInput.value) { jpyInput.value = ""; return; }
+                jpyInput.value = Math.floor(parseFloat(twdInput.value) * currentRate);
+            });
+
+            // 監聽日幣輸入
+            jpyInput.addEventListener('input', () => {
+                if (!jpyInput.value) { twdInput.value = ""; return; }
+                twdInput.value = (parseFloat(jpyInput.value) / currentRate).toFixed(2);
+            });
+        }
+        window.onload = initApp;
+let accRecords = JSON.parse(localStorage.getItem('acc_records')) || [];
+let accCats = JSON.parse(localStorage.getItem('acc_cats')) || ["服飾", "藥妝", "餐飲", "伴手禮"];
+let accClosedDates = new Set();
+
+function openAccModal() {
+    document.getElementById('accModal').style.display = 'flex';
+    document.getElementById('acc-date').value = new Date().toISOString().split('T')[0];
+    renderAccCatOptions();
+}
+
+function closeAccModal() { document.getElementById('accModal').style.display = 'none'; }
+
+function renderAccCatOptions() {
+    const s = document.getElementById('acc-cat-select');
+    s.innerHTML = accCats.map(c => `<option value="${c}">${c}</option>`).join('');
+}
+
+function addAccCategory() {
+    const val = document.getElementById('acc-new-cat').value.trim();
+    if (val && !accCats.includes(val)) {
+        accCats.push(val);
+        localStorage.setItem('acc_cats', JSON.stringify(accCats));
+        renderAccCatOptions();
+        document.getElementById('acc-cat-select').value = val;
+        document.getElementById('acc-new-cat').value = '';
+    }
+}
+
+function saveAccRecord() {
+    const record = {
+        id: Date.now(),
+        date: document.getElementById('acc-date').value,
+        cat: document.getElementById('acc-cat-select').value,
+        shop: document.getElementById('acc-shop').value || "未指定商店",
+        amount: parseFloat(document.getElementById('acc-amount-in').value) || 0,
+        pay: document.getElementById('acc-pay-method').value
+    };
+    if (record.amount <= 0) return alert("請輸入金額");
+    accRecords.push(record);
+    localStorage.setItem('acc_records', JSON.stringify(accRecords));
+    closeAccModal();
+    updateAccUI();
+}
+
+function deleteAccRecord(id) {
+    if(confirm('確定刪除嗎？')) {
+        accRecords = accRecords.filter(r => r.id !== id);
+        localStorage.setItem('acc_records', JSON.stringify(accRecords));
+        updateAccUI();
+    }
+}
+
+function updateAccUI() {
+    const totalJPY = accRecords.reduce((sum, r) => sum + r.amount, 0);
+    const totalTWD = Math.round(totalJPY * (typeof currentRate !== 'undefined' ? 1/currentRate : 0.21)); 
+    // 這裡用了你原本網頁的 currentRate 變數
+
+    if(document.getElementById('acc-total-jpy')) {
+        document.getElementById('acc-total-jpy').innerText = `¥ ${totalJPY.toLocaleString()}`;
+        document.getElementById('acc-total-twd').innerText = `約 NT$ ${totalTWD.toLocaleString()}`;
+        
+        // 分類統計
+        const catMap = {};
+        accRecords.forEach(r => catMap[r.cat] = (catMap[r.cat] || 0) + r.amount);
+        document.getElementById('acc-category-grid').innerHTML = Object.keys(catMap).map(k => `
+            <div class="cat-node"><span>${k}</span><span>¥${catMap[k].toLocaleString()}</span></div>
+        `).join('');
+
+        // 列表渲染 (含收納邏輯)
+        const list = document.getElementById('acc-list');
+        const grouped = accRecords.reduce((acc, r) => { (acc[r.date] = acc[r.date] || []).push(r); return acc; }, {});
+        const sortedDates = Object.keys(grouped).sort((a,b) => new Date(b) - new Date(a));
+
+        list.innerHTML = sortedDates.map(date => {
+            const isClosed = accClosedDates.has(date);
+            const daySum = grouped[date].reduce((s, r) => s + r.amount, 0);
+            return `
+                <div class="acc-date-group">
+                    <div class="acc-date-header" onclick="toggleAccDate('${date}')">
+                        <span>${date} (¥${daySum.toLocaleString()})</span>
+                        <span>${isClosed ? '◀' : '▼'}</span>
+                    </div>
+                    <div style="display: ${isClosed ? 'none' : 'block'}">
+                        ${grouped[date].map(r => `
+                            <div class="acc-item">
+                                <div class="acc-info">
+                                    <div class="shop">${r.shop}</div>
+                                    <div class="sub">${r.cat} · ${r.pay}</div>
+                                </div>
+                                <div class="acc-right">
+                                    <div class="acc-amount">¥${r.amount.toLocaleString()}</div>
+                                    <button class="acc-del" onclick="deleteAccRecord(${r.id})">×</button>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
+}
+
+function toggleAccDate(date) {
+    accClosedDates.has(date) ? accClosedDates.delete(date) : accClosedDates.add(date);
+    updateAccUI();
+}
+    </script>
+<!-- 記帳彈出視窗 -->
+<div id="accModal" class="acc-modal">
+    <div class="acc-modal-content">
+        <!-- 這是新增的左上角 X 按鈕 -->
+        <button class="acc-modal-close-left" onclick="closeAccModal()">✕</button>
+        <h3 style="text-align:center; margin-bottom:15px;">新增支出</h3>
+        <label>日期</label>
+        <input type="date" id="acc-date">
+        <label>支出項目</label>
+        <select id="acc-cat-select"></select>
+        <div class="cat-input-area">
+            <input type="text" id="acc-new-cat" placeholder="新增分類...">
+            <button class="plus-btn" onclick="addAccCategory()">+</button>
+        </div>
+        <label>店名</label>
+        <input type="text" id="acc-shop" placeholder="例如：Uniqlo">
+        <label>金額 (日圓)</label>
+        <input type="number" id="acc-amount-in" placeholder="¥">
+        <label>支付方式</label>
+        <select id="acc-pay-method">
+            <option value="現金">現金</option>
+            <option value="信用卡">信用卡</option>
+				<option value="IC卡">IC卡</option>
+        </select>
+        <button class="save-btn" style="width:100%; margin-top:20px;" onclick="saveAccRecord()">儲存</button>
+    </div>
+</div>
+</body>
+</html>
